@@ -1,34 +1,65 @@
-import { Box, Button, MantineProvider, PasswordInput, Space, TextInput } from '@mantine/core';
-import { useInputState } from '@mantine/hooks';
-import * as auth from 'firebase/auth';
-import { useEffect } from 'react';
+import {
+  Box,
+  Button,
+  PasswordInput,
+  Space,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import { useInputState } from "@mantine/hooks";
+import * as auth from "firebase/auth";
+import { Fragment } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Root from "./components/root";
+import useLogout from "./hooks/authentication/use-logout";
+import Providers from "./providers";
+
+const Login = () => {
+  const [email, setEmail] = useInputState("");
+  const [password, setPassword] = useInputState("");
+  const authenticate = () => {
+    auth
+      .signInWithEmailAndPassword(auth.getAuth(), email, password)
+      .then(() => console.log("logged in"));
+  };
+
+  return (
+    <Box>
+      <TextInput mb={"md"} label={"Email"} value={email} onChange={setEmail} />
+      <PasswordInput
+        label={"Password"}
+        value={password}
+        onChange={setPassword}
+      />
+      <Space h={"lg"} />
+      <Button fullWidth onClick={authenticate}>
+        Submit
+      </Button>
+    </Box>
+  );
+};
+
+const Main = () => {
+  const logout = useLogout();
+  return (
+    <Fragment>
+      <Text>Main</Text>
+      <Button onClick={logout}>Logout</Button>
+    </Fragment>
+  );
+};
 
 export default function App() {
-  const [email, setEmail] = useInputState('');
-  const [password, setPassword] = useInputState('');
-  const authenticate = () => {
-    auth.signInWithEmailAndPassword(auth.getAuth(), email, password )
-    .then(() => console.log('logged in'));
-  }
-
-  useEffect(() => {
-    const sub = auth.onAuthStateChanged(auth.getAuth(), (user) => {
-      console.log(user);
-    }, (error) => {
-      console.error(error);
-    });
-    return () => {
-      sub();
-    }
-  }, [])
-
-
-  return <MantineProvider>
-    <Box>
-      <TextInput mb={'md'} label={'Email'} value={email} onChange={setEmail} />
-      <PasswordInput label={'Password'} value={password} onChange={setPassword} />
-      <Space h={'lg'} />
-      <Button fullWidth onClick={authenticate}>Submit</Button>
-    </Box>
-  </MantineProvider>;
+  return (
+    <Providers>
+      <BrowserRouter>
+        <Routes>
+          <Route path={"/"} element={<Root />}>
+            <Route path={"login"} element={<Login />} />
+            <Route path={"main"} element={<Main />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Providers>
+  );
 }
