@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useBooleanToggle } from "@mantine/hooks";
 
 interface FormValues {
   email: string;
@@ -14,18 +15,20 @@ interface FormValues {
 }
 
 const Login = () => {
+  const [loading, toggleLoading] = useBooleanToggle(false);
   const { getInputProps, onSubmit } = useForm<FormValues>({
     initialValues: { email: "", password: "" },
     validate: {
-      email: (value) => !value && "Email is required",
-      password: (value) => !value && "Password is required",
+      email: (value) => (!value ? "Email is required" : undefined),
+      password: (value) => (!value ? "Password is required" : undefined),
     },
   });
   const authenticate = useLogin();
 
   const onValid = (values: FormValues) => {
     const { email, password } = values;
-    authenticate(email, password);
+    toggleLoading();
+    return authenticate(email, password).then(() => toggleLoading());
   };
 
   return (
@@ -34,7 +37,7 @@ const Login = () => {
         <TextInput mb={"md"} label={"Email"} {...getInputProps("email")} />
         <PasswordInput label={"Password"} {...getInputProps("password")} />
         <Space h={"lg"} />
-        <Button type="submit" fullWidth>
+        <Button loading={loading} type={"submit"} fullWidth>
           Submit
         </Button>
       </form>
