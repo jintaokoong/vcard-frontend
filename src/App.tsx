@@ -11,17 +11,14 @@ import * as auth from "firebase/auth";
 import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Root from "./components/root";
+import useLogin from "./hooks/authentication/use-login";
 import useLogout from "./hooks/authentication/use-logout";
 import Providers from "./providers";
 
 const Login = () => {
   const [email, setEmail] = useInputState("");
   const [password, setPassword] = useInputState("");
-  const authenticate = () => {
-    auth
-      .signInWithEmailAndPassword(auth.getAuth(), email, password)
-      .then(() => console.log("logged in"));
-  };
+  const authenticate = useLogin();
 
   return (
     <Box>
@@ -32,7 +29,7 @@ const Login = () => {
         onChange={setPassword}
       />
       <Space h={"lg"} />
-      <Button fullWidth onClick={authenticate}>
+      <Button fullWidth onClick={() => authenticate(email, password)}>
         Submit
       </Button>
     </Box>
