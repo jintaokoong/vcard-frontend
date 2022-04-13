@@ -20,6 +20,9 @@
     "!(*pnpm-lock).yaml": "prettier --write"
   },
   "dependencies": {
+    "@mantine/core": "^4.1.3",
+    "@mantine/hooks": "^4.1.3",
+    "firebase": "^9.6.10",
     "react": "18.0.0",
     "react-dom": "18.0.0"
   },
