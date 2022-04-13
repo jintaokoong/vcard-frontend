@@ -4,6 +4,7 @@ specifiers:
   '@0x219/commitlint-config': 1.0.2
   '@commitlint/cli': 16.2.3
   '@mantine/core': ^4.1.3
+  '@mantine/form': ^4.1.3
   '@mantine/hooks': ^4.1.3
   '@types/react': 18.0.2
   '@types/react-dom': 18.0.0
@@ -34,6 +35,7 @@ specifiers:
 
 dependencies:
   '@mantine/core': 4.1.3_263f1dc88cfc8835f691d3c5197402fc
+  '@mantine/form': 4.1.3_react@18.0.0
   '@mantine/hooks': 4.1.3_react@18.0.0
   '@types/react-router-dom': 5.3.3
   firebase: 9.6.10
@@ -1148,6 +1150,14 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/react'
+    dev: false
+
+  /@mantine/form/4.1.3_react@18.0.0:
+    resolution: {integrity: sha512-yHd/lEPVziUwv3yU045ak3Ar/gM1I7WNI9gFtEau2x5VRyLFZzc82c7eUYdNcPlJzJZrBNQffyVh5938jS5mng==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /@mantine/hooks/4.1.3_react@18.0.0:
