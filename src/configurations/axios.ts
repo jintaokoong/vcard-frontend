@@ -3,7 +3,7 @@ import * as auth from "firebase/auth";
 import { assoc, defaultTo } from "ramda";
 
 const axiosInstance = axios.create({
-  baseURL: "http://" + import.meta.env.VITE_APP_API_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_API_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
@@ -12,7 +12,6 @@ axiosInstance.interceptors.request.use(async (config) => {
     try {
       const token = await currentUser.getIdToken();
       const headers = defaultTo({})(config.headers);
-      console.log(assoc("Authorization", `Bearer ${token}`, headers));
       config.headers = assoc("Authorization", `Bearer ${token}`, headers);
     } catch (error) {
       console.error(error);
