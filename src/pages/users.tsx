@@ -1,17 +1,32 @@
 import { Button, Grid, Group, Menu, Paper, Text, Title } from '@mantine/core';
 import useUsers from '@/hooks/users/use-users';
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { useBooleanToggle, useLogger } from '@mantine/hooks';
 import { AuthenticationContext } from '@/providers/authentication-provider';
-import { FaPaperPlane } from 'react-icons/all';
+import { FaPaperPlane, FaTrash } from 'react-icons/all';
 import InviteUserModal from '@/components/modals/users/invite-user-modal';
+import ConfirmationModal from '@/components/modals/confirmation-modal';
+import useDeleteUser from '@/hooks/users/use-delete-user';
 
 const Users = () => {
   const { data: { users } = { users: [] } } = useUsers();
   const { user } = useContext(AuthenticationContext);
-  const [opened, toggle] = useBooleanToggle();
+
+  const [inviteOpened, toggleInvite] = useBooleanToggle();
+  const [deleteUser, setDeleteUser] = useState<string>();
+
+  const { mutate, isLoading: isDeleting } = useDeleteUser();
 
   useLogger('users', [users]);
+
+  const onClick = () => {
+    if (!deleteUser) return console.error('abort. abnormal state.');
+    mutate(deleteUser, {
+      onSuccess: () => {
+        setDeleteUser(undefined);
+      },
+    });
+  };
 
   return (
     <Fragment>
@@ -21,7 +36,7 @@ const Users = () => {
           size={'md'}
           variant={'light'}
           leftIcon={<FaPaperPlane />}
-          onClick={() => toggle(true)}
+          onClick={() => toggleInvite(true)}
         >
           Invite
         </Button>
@@ -46,7 +61,14 @@ const Users = () => {
                   {u.email}
                 </Text>
                 <Menu position={'bottom'} placement={'end'}>
-                  <Menu.Item disabled={u.uid === user?.uid}>Delete</Menu.Item>
+                  <Menu.Item
+                    icon={<FaTrash />}
+                    color={'red'}
+                    onClick={() => setDeleteUser(u.uid)}
+                    disabled={u.uid === user?.uid}
+                  >
+                    Delete
+                  </Menu.Item>
                 </Menu>
               </Group>
               <Text size={'sm'}>
@@ -56,7 +78,22 @@ const Users = () => {
           </Grid.Col>
         ))}
       </Grid>
-      <InviteUserModal opened={opened} onClose={() => toggle(false)} />
+      <InviteUserModal
+        opened={inviteOpened}
+        onClose={() => toggleInvite(false)}
+      />
+      <ConfirmationModal
+        title={'Delete confirmation'}
+        content={'Do you want to delete user?'}
+        onConfirm={onClick}
+        confirmButton={{
+          variant: 'filled',
+          color: 'red',
+          loading: isDeleting,
+        }}
+        opened={deleteUser !== undefined}
+        onClose={() => setDeleteUser(undefined)}
+      />
     </Fragment>
   );
 };

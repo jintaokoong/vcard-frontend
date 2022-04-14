@@ -4,6 +4,9 @@ import axiosInstance from '@/configurations/axios';
 const inviteUser = (payload: InviteUserRequest) =>
   axiosInstance.post('/users/invite', payload).then(({ data }) => data);
 
-const userService = { inviteUser };
+const deleteUser = (id: string) =>
+  axiosInstance.delete(`/users/${id}`).then(({ data }) => data);
+
+const userService = { inviteUser, deleteUser };
 
 export default userService;
