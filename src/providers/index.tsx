@@ -7,6 +7,7 @@ import { Fragment, PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthenticationProvider from './authentication-provider';
 import { useLocalStorageValue } from '@mantine/hooks';
+import AbilityProvider from '@/providers/ability-provider';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,9 @@ const Providers = ({ children }: PropsWithChildren<unknown>) => {
           toggleColorScheme={toggleColorScheme}
         >
           <MantineProvider theme={{ colorScheme }} withGlobalStyles>
-            <AuthenticationProvider>{children}</AuthenticationProvider>
+            <AuthenticationProvider>
+              <AbilityProvider>{children}</AbilityProvider>
+            </AuthenticationProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </QueryClientProvider>

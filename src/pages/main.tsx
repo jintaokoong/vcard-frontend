@@ -6,6 +6,7 @@ import Section from '@/components/navigation/section';
 import { FaSignOutAlt, FaUsers } from 'react-icons/all';
 import useLogout from '@/hooks/authentication/use-logout';
 import { FaIdCard } from 'react-icons/fa';
+import { Can } from '@/contexts/casl-context';
 
 const selector = (s: State) => s.layout.opened;
 
@@ -27,13 +28,21 @@ const Main = () => {
           p={'xs'}
         >
           <Navbar.Section component={ScrollArea} grow>
-            <Section match={'/main/users'} icon={<FaUsers />} title={'Users'} />
-            <Section
-              match={'/main/cards'}
-              icon={<FaIdCard />}
-              iconColor={'cyan'}
-              title={'Cards'}
-            />
+            <Can I={'view'} a={'user'}>
+              <Section
+                match={'/main/users'}
+                icon={<FaUsers />}
+                title={'Users'}
+              />
+            </Can>
+            <Can I={'view'} a={'card'}>
+              <Section
+                match={'/main/cards'}
+                icon={<FaIdCard />}
+                iconColor={'cyan'}
+                title={'Cards'}
+              />
+            </Can>
             <Section
               onClick={logout}
               icon={<FaSignOutAlt />}

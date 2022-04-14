@@ -7,6 +7,20 @@ import Main from '@/pages/main';
 import Dashboard from '@/pages/dashboard';
 import Users from '@/pages/users';
 import Cards from '@/pages/cards';
+import { Can } from '@/contexts/casl-context';
+import { createElement, FunctionComponent } from 'react';
+
+interface ProtectProps {
+  s: string;
+  a: string;
+  component: FunctionComponent;
+}
+
+const Protect = (props: ProtectProps) => (
+  <Can I={props.a} a={props.s}>
+    {createElement(props.component, {})}
+  </Can>
+);
 
 export default function App() {
   return (
@@ -24,8 +38,14 @@ export default function App() {
               }
             >
               <Route index element={<Dashboard />} />
-              <Route path={'users'} element={<Users />} />
-              <Route path={'cards'} element={<Cards />} />
+              <Route
+                path={'users'}
+                element={<Protect s={'user'} a={'view'} component={Users} />}
+              />
+              <Route
+                path={'cards'}
+                element={<Protect s={'card'} a={'view'} component={Cards} />}
+              />
             </Route>
           </Route>
         </Routes>

@@ -13,7 +13,7 @@ const usePrevention = () => {
       navigate(user == null ? '/login' : '/main');
     } else if (pathname === '/login' && user != null) {
       navigate('/main');
-    } else if (pathname === '/main' && user == null) {
+    } else if (pathname.startsWith('/main') && user == null) {
       navigate('/login');
     }
   }, [pathname, user, hydrated, navigate]);

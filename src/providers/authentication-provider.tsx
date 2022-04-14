@@ -1,6 +1,7 @@
-import { User } from "firebase/auth";
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
-import * as auth from "firebase/auth";
+import { User } from 'firebase/auth';
+import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import * as auth from 'firebase/auth';
+import useStore from '@/state/store';
 
 export const AuthenticationContext = createContext<{
   user: User | null;
@@ -13,6 +14,17 @@ export const AuthenticationContext = createContext<{
 const AuthenticationProvider = ({ children }: PropsWithChildren<any>) => {
   const [hydrated, setHydrated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const setRole = useStore((s) => s.auth.setRole);
+
+  useEffect(() => {
+    if (user) {
+      user.getIdTokenResult().then((res) => {
+        setRole(res.claims.admin ? 'ADMIN' : 'USER');
+      });
+    } else {
+      setRole('ANON');
+    }
+  }, [user]);
 
   useEffect(() => {
     const sub = auth.onAuthStateChanged(
@@ -25,7 +37,7 @@ const AuthenticationProvider = ({ children }: PropsWithChildren<any>) => {
         console.error(error);
         setUser(null);
         setHydrated((value) => (!value ? true : value));
-      }
+      },
     );
     return () => {
       sub();
