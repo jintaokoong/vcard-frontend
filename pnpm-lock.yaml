@@ -21,6 +21,7 @@ specifiers:
   eslint-plugin-react: 7.29.4
   firebase: ^9.6.10
   husky: 7.0.4
+  immer: ^9.0.12
   is-ci: 3.0.1
   lint-staged: 12.3.7
   prettier: 2.6.2
@@ -29,6 +30,7 @@ specifiers:
   ramda: ^0.28.0
   react: 18.0.0
   react-dom: 18.0.0
+  react-icons: ^4.3.1
   react-query: ^3.34.19
   react-router-dom: ^6.3.0
   serve: 13.0.2
@@ -36,6 +38,7 @@ specifiers:
   vite: 2.9.1
   vite-plugin-mkcert: 1.6.0
   vite-tsconfig-paths: 3.4.1
+  zustand: ^3.7.2
 
 dependencies:
   '@mantine/core': 4.1.3_263f1dc88cfc8835f691d3c5197402fc
@@ -44,11 +47,14 @@ dependencies:
   '@types/react-router-dom': 5.3.3
   axios: 0.26.1
   firebase: 9.6.10
+  immer: 9.0.12
   ramda: 0.28.0
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
+  react-icons: 4.3.1_react@18.0.0
   react-query: 3.34.19_react-dom@18.0.0+react@18.0.0
   react-router-dom: 6.3.0_react-dom@18.0.0+react@18.0.0
+  zustand: 3.7.2_react@18.0.0
 
 devDependencies:
   '@0x219/commitlint-config': 1.0.2
@@ -3250,6 +3256,10 @@ packages:
     resolution: {integrity: sha1-nbHb0Pr43m++D13V5Wu2BigN5ps=}
     dev: false
 
+  /immer/9.0.12:
+    resolution: {integrity: sha512-lk7UNmSbAukB5B6dh9fnh5D0bJTOFKxVg2cyJWTYrWRfhLrLMBquONcUs3aFq507hNoIZEDDh8lb8UtOizSMhA==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -4218,6 +4228,14 @@ packages:
 
   /react-fast-compare/3.2.0:
     resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
+    dev: false
+
+  /react-icons/4.3.1_react@18.0.0:
+    resolution: {integrity: sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /react-is/16.13.1:
@@ -5259,3 +5277,15 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zustand/3.7.2_react@18.0.0:
+    resolution: {integrity: sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.0.0
+    dev: false
