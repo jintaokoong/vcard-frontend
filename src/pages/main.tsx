@@ -28,19 +28,19 @@ const Main = () => {
           p={'xs'}
         >
           <Navbar.Section component={ScrollArea} grow>
-            <Can I={'view'} a={'user'}>
-              <Section
-                match={'/main/users'}
-                icon={<FaUsers />}
-                title={'Users'}
-              />
-            </Can>
             <Can I={'view'} a={'card'}>
               <Section
                 match={'/main/cards'}
                 icon={<FaIdCard />}
                 iconColor={'cyan'}
                 title={'Cards'}
+              />
+            </Can>
+            <Can I={'view'} a={'user'}>
+              <Section
+                match={'/main/users'}
+                icon={<FaUsers />}
+                title={'Users'}
               />
             </Can>
             <Section

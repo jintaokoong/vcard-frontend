@@ -1,10 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Root from './components/root';
 import Login from './pages/login';
 import Providers from './providers';
 import Gatekeeper from './providers/gatekeeper';
 import Main from '@/pages/main';
-import Dashboard from '@/pages/dashboard';
 import Users from '@/pages/users';
 import Cards from '@/pages/cards';
 import { Can } from '@/contexts/casl-context';
@@ -37,7 +36,7 @@ export default function App() {
                 </Gatekeeper>
               }
             >
-              <Route index element={<Dashboard />} />
+              <Route index element={<Navigate to={'cards'} />} />
               <Route
                 path={'users'}
                 element={<Protect s={'user'} a={'view'} component={Users} />}
