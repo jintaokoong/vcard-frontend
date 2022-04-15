@@ -1,8 +1,21 @@
-import { BasicInfo } from '@/interfaces/cards/basic-info';
-import { WorkInfo } from '@/interfaces/cards/work-info';
+import { Address } from '@/interfaces/cards/address';
+
+type Optional<T> = T | undefined;
 
 export interface Vcard {
-  basicInfo: BasicInfo;
-  workInfo: WorkInfo;
-  notes: string;
+  _id: string;
+  firstName: Optional<string>;
+  lastName: Optional<string>;
+  contact: Optional<string>;
+  email: Optional<string>;
+  address: Optional<Address>;
+  title: Optional<string>;
+  organization: Optional<string>;
+  workContact: Optional<string>;
+  workEmail: Optional<string>;
+  workAddress: Optional<Address>;
+  notes: Optional<string>;
+  createdBy: Optional<string>;
+  createdAt: number;
+  updatedAt: number;
 }

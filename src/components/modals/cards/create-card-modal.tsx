@@ -17,19 +17,28 @@ import { defaultTo, length, pipe, prop, when } from 'ramda';
 import { createOption, createOptions } from '@/utils/dropdown-utils';
 import countries from '@/constants/countries';
 import { Country } from '@/interfaces/shared/country';
+import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
+import useCreateCard from '@/hooks/cards/use-create-card';
 
 /* eslint-disable */
 interface Props extends SlimModalProps {}
 
 const CreateCardModal = (props: Props) => {
   const [state, handlers] = useAccordionState({ initialItem: 0, total: 5 });
-  const { control, register, handleSubmit } = useForm<Vcard>({
-    defaultValues: vcardInitialValues,
-  });
+  const { control, register, handleSubmit } = useForm<CreateVcardRequest>();
+  const { mutate, isLoading } = useCreateCard();
+
+  const onValid = (values: CreateVcardRequest) => {
+    mutate(values, {
+      onSuccess: () => {
+        props.onClose();
+      },
+    });
+  };
 
   return (
     <Modal title={'Create New Card'} size={'lg'} {...props}>
-      <form onSubmit={handleSubmit((values) => console.log(values))}>
+      <form onSubmit={handleSubmit(onValid)}>
         <Accordion
           state={state}
           onChange={handlers.setState}
@@ -42,25 +51,16 @@ const CreateCardModal = (props: Props) => {
           <Accordion.Item offsetIcon={false} label={'Personal Information'}>
             <Grid>
               <Grid.Col xs={12} sm={6}>
-                <TextInput
-                  {...register('basicInfo.firstName')}
-                  label={'First Name'}
-                />
+                <TextInput {...register('firstName')} label={'First Name'} />
               </Grid.Col>
               <Grid.Col xs={12} sm={6}>
-                <TextInput
-                  {...register('basicInfo.lastName')}
-                  label={'Last Name'}
-                />
+                <TextInput {...register('lastName')} label={'Last Name'} />
               </Grid.Col>
               <Grid.Col>
-                <TextInput
-                  label={'Contact'}
-                  {...register('basicInfo.contact')}
-                />
+                <TextInput label={'Contact'} {...register('contact')} />
               </Grid.Col>
               <Grid.Col>
-                <TextInput label={'Email'} {...register('basicInfo.email')} />
+                <TextInput label={'Email'} {...register('email')} />
               </Grid.Col>
             </Grid>
           </Accordion.Item>
@@ -69,37 +69,28 @@ const CreateCardModal = (props: Props) => {
               <Grid.Col>
                 <TextInput
                   label={'Address Label'}
-                  {...register('basicInfo.address.label')}
+                  {...register('address.label')}
                 />
               </Grid.Col>
               <Grid.Col>
-                <TextInput
-                  label={'Street'}
-                  {...register('basicInfo.address.street')}
-                />
+                <TextInput label={'Street'} {...register('address.street')} />
               </Grid.Col>
               <Grid.Col>
-                <TextInput
-                  label={'City'}
-                  {...register('basicInfo.address.city')}
-                />
+                <TextInput label={'City'} {...register('address.city')} />
               </Grid.Col>
               <Grid.Col xs={12} sm={6}>
-                <TextInput
-                  label={'State'}
-                  {...register('basicInfo.address.state')}
-                />
+                <TextInput label={'State'} {...register('address.state')} />
               </Grid.Col>
               <Grid.Col xs={12} sm={6}>
                 <TextInput
                   label={'Postal Code'}
-                  {...register('basicInfo.address.postalCode')}
+                  {...register('address.postalCode')}
                 />
               </Grid.Col>
               <Grid.Col>
                 <Controller
                   control={control}
-                  name={'basicInfo.address.countryCode'}
+                  name={'address.countryCode'}
                   render={({ field }) => (
                     <Select
                       searchable
@@ -111,7 +102,7 @@ const CreateCardModal = (props: Props) => {
                       value={when<string, string | null>(
                         (value) => length(value) === 0,
                         () => null,
-                      )(field.value)}
+                      )(field.value ?? '')}
                       onChange={pipe(defaultTo(''), field.onChange)}
                     />
                   )}
@@ -122,25 +113,22 @@ const CreateCardModal = (props: Props) => {
           <Accordion.Item offsetIcon={false} label={'Work Information'}>
             <Grid>
               <Grid.Col>
-                <TextInput label={'Title'} {...register('workInfo.title')} />
+                <TextInput label={'Title'} {...register('title')} />
               </Grid.Col>
               <Grid.Col>
                 <TextInput
                   label={'Organization'}
-                  {...register('workInfo.organization')}
+                  {...register('organization')}
                 />
               </Grid.Col>
               <Grid.Col>
                 <TextInput
                   label={'Work Contact'}
-                  {...register('workInfo.contact')}
+                  {...register('workContact')}
                 />
               </Grid.Col>
               <Grid.Col>
-                <TextInput
-                  label={'Work Email'}
-                  {...register('workInfo.email')}
-                />
+                <TextInput label={'Work Email'} {...register('workEmail')} />
               </Grid.Col>
             </Grid>
           </Accordion.Item>
@@ -149,37 +137,31 @@ const CreateCardModal = (props: Props) => {
               <Grid.Col>
                 <TextInput
                   label={'Address Label'}
-                  {...register('workInfo.address.label')}
+                  {...register('workAddress.label')}
                 />
               </Grid.Col>
               <Grid.Col>
                 <TextInput
                   label={'Street'}
-                  {...register('workInfo.address.street')}
+                  {...register('workAddress.street')}
                 />
               </Grid.Col>
               <Grid.Col>
-                <TextInput
-                  label={'City'}
-                  {...register('workInfo.address.city')}
-                />
+                <TextInput label={'City'} {...register('workAddress.city')} />
               </Grid.Col>
               <Grid.Col xs={12} sm={6}>
-                <TextInput
-                  label={'State'}
-                  {...register('workInfo.address.state')}
-                />
+                <TextInput label={'State'} {...register('workAddress.state')} />
               </Grid.Col>
               <Grid.Col xs={12} sm={6}>
                 <TextInput
                   label={'Postal Code'}
-                  {...register('workInfo.address.postalCode')}
+                  {...register('workAddress.postalCode')}
                 />
               </Grid.Col>
               <Grid.Col>
                 <Controller
                   control={control}
-                  name={'workInfo.address.countryCode'}
+                  name={'workAddress.countryCode'}
                   render={({ field }) => (
                     <Select
                       searchable
@@ -191,7 +173,7 @@ const CreateCardModal = (props: Props) => {
                       value={when<string, string | null>(
                         (value) => length(value) === 0,
                         () => null,
-                      )(field.value)}
+                      )(field.value ?? '')}
                       onChange={pipe(defaultTo(''), field.onChange)}
                     />
                   )}
@@ -204,7 +186,7 @@ const CreateCardModal = (props: Props) => {
           </Accordion.Item>
         </Accordion>
         <Space h={'sm'} />
-        <Button type={'submit'} fullWidth>
+        <Button loading={isLoading} type={'submit'} fullWidth>
           Create
         </Button>
       </form>
