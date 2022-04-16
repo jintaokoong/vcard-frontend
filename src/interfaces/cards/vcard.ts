@@ -3,6 +3,7 @@ import { Address } from '@/interfaces/cards/address';
 type Optional<T> = T | undefined;
 
 export interface Vcard {
+  label: string;
   _id: string;
   firstName: Optional<string>;
   lastName: Optional<string>;

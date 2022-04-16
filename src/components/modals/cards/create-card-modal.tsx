@@ -11,8 +11,6 @@ import {
 } from '@mantine/core';
 import { SlimModalProps } from '@/interfaces/utils/slim-modal-props';
 import { Controller, useForm } from 'react-hook-form';
-import { Vcard } from '@/interfaces/cards/vcard';
-import { vcardInitialValues } from '@/constants/vcard-initial-values';
 import { defaultTo, length, pipe, prop, when } from 'ramda';
 import { createOption, createOptions } from '@/utils/dropdown-utils';
 import countries from '@/constants/countries';
@@ -25,7 +23,12 @@ interface Props extends SlimModalProps {}
 
 const CreateCardModal = (props: Props) => {
   const [state, handlers] = useAccordionState({ initialItem: 0, total: 5 });
-  const { control, register, handleSubmit } = useForm<CreateVcardRequest>();
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateVcardRequest>();
   const { mutate, isLoading } = useCreateCard();
 
   const onValid = (values: CreateVcardRequest) => {
@@ -39,6 +42,15 @@ const CreateCardModal = (props: Props) => {
   return (
     <Modal title={'Create New Card'} size={'lg'} {...props}>
       <form onSubmit={handleSubmit(onValid)}>
+        <TextInput
+          mx={'sm'}
+          mb={'md'}
+          label={'Card Label'}
+          error={errors.label?.message}
+          {...register('label', {
+            validate: (value) => (!value ? 'Label is required' : undefined),
+          })}
+        />
         <Accordion
           state={state}
           onChange={handlers.setState}

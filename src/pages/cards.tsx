@@ -1,8 +1,9 @@
-import { Button, Grid, Group, Paper, Text, Title } from '@mantine/core';
+import { Button, Group, Table, Title } from '@mantine/core';
 import { Fragment } from 'react';
 import useBooleanModal from '@/hooks/modal/use-boolean-modal';
 import CreateCardModal from '@/components/modals/cards/create-card-modal';
 import useCards from '@/hooks/cards/use-cards';
+import TableBody from '@/components/tables/table-body';
 
 const Cards = () => {
   const { opened, onOpen, onClose } = useBooleanModal();
@@ -15,18 +16,19 @@ const Cards = () => {
           Create
         </Button>
       </Group>
-      <Grid>
-        {data.map((card) => (
-          <Grid.Col key={card._id} lg={4} xl={3}>
-            <Paper p={'md'}>
-              <Title order={3} mb={'sm'}>
+      <Table>
+        <TableBody
+          data={data}
+          render={(card) => (
+            <tr>
+              <td>
                 {card.firstName} {card.lastName}
-              </Title>
-              <Text>{card.title}</Text>
-            </Paper>
-          </Grid.Col>
-        ))}
-      </Grid>
+              </td>
+              <td>{card.createdAt}</td>
+            </tr>
+          )}
+        />
+      </Table>
       <CreateCardModal opened={opened} onClose={onClose} />
     </Fragment>
   );
