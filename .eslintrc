@@ -10,6 +10,9 @@
     "plugin:react/jsx-runtime",
     "prettier"
   ],
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": "off"
+  },
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "env": {
     "browser": true,

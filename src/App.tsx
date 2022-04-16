@@ -8,6 +8,7 @@ import Users from '@/pages/users';
 import Cards from '@/pages/cards';
 import { Can } from '@/contexts/casl-context';
 import { createElement, FunctionComponent } from 'react';
+import CardsDetails from '@/pages/cards-details';
 
 interface ProtectProps {
   s: string;
@@ -41,10 +42,18 @@ export default function App() {
                 path={'users'}
                 element={<Protect s={'user'} a={'view'} component={Users} />}
               />
-              <Route
-                path={'cards'}
-                element={<Protect s={'card'} a={'view'} component={Cards} />}
-              />
+              <Route path={'cards'}>
+                <Route
+                  index
+                  element={<Protect s={'card'} a={'view'} component={Cards} />}
+                />
+                <Route
+                  path={'details/:id'}
+                  element={
+                    <Protect s={'card'} a={'view'} component={CardsDetails} />
+                  }
+                />
+              </Route>
             </Route>
           </Route>
         </Routes>

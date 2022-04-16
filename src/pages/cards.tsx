@@ -20,6 +20,9 @@ import usePagination from '@/hooks/listings/use-pagination';
 import useItemModal from '@/hooks/modals/use-item-modal';
 import { Vcard } from '@/interfaces/cards/vcard';
 import DeleteCardModal from '@/components/modals/cards/delete-card-modal';
+import { FaBook } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/all';
+import { Link } from 'react-router-dom';
 
 const composeNotNil = composeWith((fn, res) => (isNil(res) ? res : fn(res)));
 
@@ -47,7 +50,7 @@ const Cards = () => {
       <Paper p={'sm'} shadow={'xs'} mb={'md'}>
         <Table highlightOnHover verticalSpacing={'xs'}>
           <TableHeader
-            headers={array.initiate('Card Label', 'Created At', '')}
+            headers={array.initiate('Card Label', 'Created At', 'QR Link', '')}
           />
           <TableBody
             loading={isLoading}
@@ -61,10 +64,19 @@ const Cards = () => {
                     composeNotNil([dateUtils.formatDefault])(card.createdAt),
                   )}
                 </td>
+                <td>https://somedomain.netlify.app/{card._id}</td>
                 <td>
                   <Menu>
-                    <Menu.Item p={'sm'}>View Details</Menu.Item>
                     <Menu.Item
+                      icon={<FaBook />}
+                      p={'sm'}
+                      to={`details/${card._id}`}
+                      component={Link}
+                    >
+                      View Details
+                    </Menu.Item>
+                    <Menu.Item
+                      icon={<FaTrash />}
                       p={'sm'}
                       color={'red'}
                       onClick={() => onDeleteOpen(card)}

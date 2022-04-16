@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios';
 import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
 import { ListingOptions } from '@/interfaces/shared/listing-options';
 import { ListingResponse } from '@/interfaces/shared/listing-response';
+import { ApiResponse } from '@/interfaces/shared/api-response';
 
 const fetchCardListing = (options: ListingOptions<never>) => {
   return axiosInstance
@@ -27,6 +28,11 @@ const createCard = (payload: Partial<Vcard>) =>
     .post<Vcard, AxiosResponse<Vcard>, CreateVcardRequest>('/cards', payload)
     .then(prop('data'));
 
+const fetchCard = (id: string) =>
+  axiosInstance
+    .get<ApiResponse<Vcard>>(`/cards/${id}`)
+    .then(pipe(prop('data'), prop('data')));
+
 const deleteCard = (id: string) =>
   axiosInstance.delete(`/cards/${id}`).then(prop('data'));
 
@@ -34,6 +40,7 @@ const cardService = {
   createCard,
   deleteCard,
   fetchCards,
+  fetchCard,
   fetchCardListing,
 };
 
