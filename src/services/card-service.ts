@@ -27,8 +27,12 @@ const createCard = (payload: Partial<Vcard>) =>
     .post<Vcard, AxiosResponse<Vcard>, CreateVcardRequest>('/cards', payload)
     .then(prop('data'));
 
+const deleteCard = (id: string) =>
+  axiosInstance.delete(`/cards/${id}`).then(prop('data'));
+
 const cardService = {
   createCard,
+  deleteCard,
   fetchCards,
   fetchCardListing,
 };

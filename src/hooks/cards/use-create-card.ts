@@ -10,7 +10,7 @@ const useCreateCard = () => {
     cardService.createCard,
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['cards']);
+        queryClient.invalidateQueries(['cards-listing']);
       },
     },
   );

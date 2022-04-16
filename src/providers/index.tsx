@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AuthenticationProvider from './authentication-provider';
 import { useLocalStorageValue } from '@mantine/hooks';
 import AbilityProvider from '@/providers/ability-provider';
+import { NotificationsProvider } from '@mantine/notifications';
 
 const queryClient = new QueryClient();
 
@@ -27,9 +28,11 @@ const Providers = ({ children }: PropsWithChildren<unknown>) => {
           toggleColorScheme={toggleColorScheme}
         >
           <MantineProvider theme={{ colorScheme }} withGlobalStyles>
-            <AuthenticationProvider>
-              <AbilityProvider>{children}</AbilityProvider>
-            </AuthenticationProvider>
+            <NotificationsProvider>
+              <AuthenticationProvider>
+                <AbilityProvider>{children}</AbilityProvider>
+              </AuthenticationProvider>
+            </NotificationsProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </QueryClientProvider>

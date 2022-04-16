@@ -8,6 +8,7 @@ specifiers:
   '@mantine/core': ^4.1.3
   '@mantine/form': ^4.1.3
   '@mantine/hooks': ^4.1.3
+  '@mantine/notifications': ^4.1.3
   '@types/ramda': ^0.28.9
   '@types/react': 18.0.2
   '@types/react-dom': 18.0.0
@@ -52,6 +53,7 @@ dependencies:
   '@mantine/core': 4.1.3_263f1dc88cfc8835f691d3c5197402fc
   '@mantine/form': 4.1.3_react@18.0.0
   '@mantine/hooks': 4.1.3_react@18.0.0
+  '@mantine/notifications': 4.1.3_10abcfe38a103349173ece69f20945fa
   '@types/react-router-dom': 5.3.3
   axios: 0.26.1
   date-fns: 2.28.0
@@ -1208,6 +1210,21 @@ packages:
       react: '>=16.8.0'
     dependencies:
       react: 18.0.0
+    dev: false
+
+  /@mantine/notifications/4.1.3_10abcfe38a103349173ece69f20945fa:
+    resolution: {integrity: sha512-ufz8pw8JzR2hnghfJRnzCvksFjNawWWY6vKXWVL6F8uNyAq9rnTaOgJrWXcHtMD2k6YDtipzCfPU2cMYWXAzYg==}
+    peerDependencies:
+      '@mantine/core': 4.1.3
+      '@mantine/hooks': 4.1.3
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@mantine/core': 4.1.3_263f1dc88cfc8835f691d3c5197402fc
+      '@mantine/hooks': 4.1.3_react@18.0.0
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+      react-transition-group: 4.4.2_react-dom@18.0.0+react@18.0.0
     dev: false
 
   /@mantine/styles/4.1.3_31fee5138b61bcdeb416e3946f47cd38:
@@ -2457,6 +2474,13 @@ packages:
     dependencies:
       esutils: 2.0.3
     dev: true
+
+  /dom-helpers/5.2.1:
+    resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
+    dependencies:
+      '@babel/runtime': 7.17.9
+      csstype: 3.0.11
+    dev: false
 
   /dot-prop/5.3.0:
     resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==}
@@ -3957,7 +3981,6 @@ packages:
   /object-assign/4.1.1:
     resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /object-inspect/1.12.0:
     resolution: {integrity: sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==}
@@ -4217,7 +4240,6 @@ packages:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-    dev: true
 
   /property-expr/2.0.5:
     resolution: {integrity: sha512-IJUkICM5dP5znhCckHSv30Q4b5/JA5enCtkRHYaOVOAocnH/1BQEYTC5NMfT3AVl/iXKdr3aqQbQn9DxyWknwA==}
@@ -4395,6 +4417,20 @@ packages:
       use-latest: 1.2.0_@types+react@18.0.2+react@18.0.0
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-transition-group/4.4.2_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==}
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    dependencies:
+      '@babel/runtime': 7.17.9
+      dom-helpers: 5.2.1
+      loose-envify: 1.4.0
+      prop-types: 15.8.1
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
     dev: false
 
   /react/18.0.0:
