@@ -1,12 +1,25 @@
 import { Vcard } from '@/interfaces/cards/vcard';
 import axiosInstance from '@/configurations/axios';
-import { identity, pipe, prop } from 'ramda';
+import { pipe, prop } from 'ramda';
 import { AxiosResponse } from 'axios';
 import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
+import { ListingOptions } from '@/interfaces/shared/listing-options';
+import { ListingResponse } from '@/interfaces/shared/listing-response';
+
+const fetchCardListing = (options: ListingOptions<never>) => {
+  return axiosInstance
+    .get<ListingResponse<Vcard>>('/cards', {
+      params: {
+        page: options.pagination?.page,
+        pageSize: options.pagination?.pageSize,
+      },
+    })
+    .then(prop('data'));
+};
 
 const fetchCards = () =>
   axiosInstance
-    .get<{ data: Vcard[] }>('/cards')
+    .get<{ data: Vcard[] }>('/cards/all')
     .then(pipe(prop('data'), prop('data')));
 
 const createCard = (payload: Partial<Vcard>) =>
@@ -17,6 +30,7 @@ const createCard = (payload: Partial<Vcard>) =>
 const cardService = {
   createCard,
   fetchCards,
+  fetchCardListing,
 };
 
 export default cardService;
