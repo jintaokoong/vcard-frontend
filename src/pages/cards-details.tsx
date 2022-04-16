@@ -127,6 +127,12 @@ const CardsDetails = () => {
           <Grid.Col>
             <TextInput label={'Job Title'} readOnly value={data?.title} />
           </Grid.Col>
+          <Grid.Col>
+            <TextInput label={'Contact'} readOnly value={data?.workContact} />
+          </Grid.Col>
+          <Grid.Col>
+            <TextInput label={'Email'} readOnly value={data?.workEmail} />
+          </Grid.Col>
         </Grid>
       </Paper>
       {data?.workAddress && (
