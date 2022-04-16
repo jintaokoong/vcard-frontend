@@ -20,9 +20,10 @@ import usePagination from '@/hooks/listings/use-pagination';
 import useItemModal from '@/hooks/modals/use-item-modal';
 import { Vcard } from '@/interfaces/cards/vcard';
 import DeleteCardModal from '@/components/modals/cards/delete-card-modal';
-import { FaBook } from 'react-icons/fa';
+import { FaBook, FaEdit } from 'react-icons/fa';
 import { FaTrash } from 'react-icons/all';
 import { Link } from 'react-router-dom';
+import UpdateCardModal from '@/components/modals/cards/update-card-modal';
 
 const composeNotNil = composeWith((fn, res) => (isNil(res) ? res : fn(res)));
 
@@ -34,6 +35,12 @@ const Cards = () => {
     onClose: onDeleteClose,
     item,
   } = useItemModal<Vcard>();
+  const {
+    opened: updateOpened,
+    onOpen: onUpdateOpened,
+    onClose: onUpdateClose,
+    item: update,
+  } = useItemModal<string>();
   const { state: pagination, onChange } = usePagination();
   const { data, isLoading, isError } = useCardsListing({
     pagination,
@@ -69,15 +76,20 @@ const Cards = () => {
                   <Menu>
                     <Menu.Item
                       icon={<FaBook />}
-                      p={'sm'}
                       to={`details/${card._id}`}
                       component={Link}
                     >
                       View Details
                     </Menu.Item>
                     <Menu.Item
+                      icon={<FaEdit />}
+                      color={'blue'}
+                      onClick={() => onUpdateOpened(card._id)}
+                    >
+                      Update Card
+                    </Menu.Item>
+                    <Menu.Item
                       icon={<FaTrash />}
-                      p={'sm'}
                       color={'red'}
                       onClick={() => onDeleteOpen(card)}
                     >
@@ -100,6 +112,11 @@ const Cards = () => {
         item={item}
         opened={deleteOpened}
         onClose={onDeleteClose}
+      />
+      <UpdateCardModal
+        item={update}
+        opened={updateOpened}
+        onClose={onUpdateClose}
       />
     </Fragment>
   );
