@@ -17,18 +17,22 @@ import countries from '@/constants/countries';
 import { Country } from '@/interfaces/shared/country';
 import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
 import useCreateCard from '@/hooks/cards/use-create-card';
+import { useEffect, useRef } from 'react';
 
 /* eslint-disable */
 interface Props extends SlimModalProps {}
 
 const CreateCardModal = (props: Props) => {
+  const { opened } = props;
   const [state, handlers] = useAccordionState({ initialItem: 0, total: 5 });
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateVcardRequest>();
+  const resetRef = useRef(reset);
   const { mutate, isLoading } = useCreateCard();
 
   const onValid = (values: CreateVcardRequest) => {
@@ -38,6 +42,10 @@ const CreateCardModal = (props: Props) => {
       },
     });
   };
+
+  useEffect(() => {
+    !opened && resetRef.current();
+  }, [opened]);
 
   return (
     <Modal title={'Create New Card'} size={'lg'} {...props}>
@@ -199,7 +207,7 @@ const CreateCardModal = (props: Props) => {
         </Accordion>
         <Space h={'sm'} />
         <Button loading={isLoading} type={'submit'} fullWidth>
-          Create
+          Submit
         </Button>
       </form>
     </Modal>
