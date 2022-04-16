@@ -1,4 +1,5 @@
-import { Fragment } from 'react';
+import QRCode from 'qrcode';
+import { Fragment, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useCard from '@/hooks/cards/use-card';
 import {
@@ -7,6 +8,8 @@ import {
   Button,
   Grid,
   Group,
+  Image,
+  Modal,
   Paper,
   Text,
   TextInput,
@@ -16,6 +19,7 @@ import { Address } from '@/interfaces/cards/address';
 import countryUtils from '@/utils/country-utils';
 import countries from '@/constants/countries';
 import { FaQrcode } from 'react-icons/all';
+import useBooleanModal from '@/hooks/modals/use-boolean-modal';
 
 interface AddressInfoProps {
   address: Address;
@@ -55,6 +59,18 @@ const AddressInfo = ({ address }: AddressInfoProps) => {
 const CardsDetails = () => {
   const { id } = useParams<{ id: string }>();
   const { data } = useCard(id!);
+  const { opened, onOpen, onClose } = useBooleanModal();
+  const [dataUrl, setDataUrl] = useState<string>('');
+
+  useEffect(() => {
+    QRCode.toDataURL(`${import.meta.env.VITE_APP_QR_CODE_BASE_URL}/${id}`, {
+      width: 500,
+      margin: 2,
+      color: {
+        light: '#0000',
+      },
+    }).then((data) => setDataUrl(data));
+  }, [id]);
 
   return (
     <Fragment>
@@ -65,7 +81,9 @@ const CardsDetails = () => {
         <Text transform={'capitalize'}>{data?.label} Details</Text>
       </Breadcrumbs>
       <Group mb={'md'} position={'right'}>
-        <Button leftIcon={<FaQrcode />}>View QR</Button>
+        <Button leftIcon={<FaQrcode />} onClick={() => onOpen()}>
+          View QR
+        </Button>
       </Group>
       <Paper p={'md'} mb={'md'}>
         <Title order={4} mb={'md'}>
@@ -119,6 +137,9 @@ const CardsDetails = () => {
           <AddressInfo address={data.workAddress} />
         </Paper>
       )}
+      <Modal withCloseButton={false} opened={opened} onClose={onClose}>
+        <Image src={dataUrl} sx={{ background: 'white' }} />
+      </Modal>
     </Fragment>
   );
 };
