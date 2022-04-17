@@ -54,7 +54,7 @@ const Cards = () => {
           Create
         </Button>
       </Group>
-      <Paper p={'sm'} shadow={'xs'} mb={'md'} sx={{ overflowX: 'scroll' }}>
+      <Paper p={'sm'} shadow={'xs'} mb={'md'} sx={{ overflowX: 'auto' }}>
         <Table highlightOnHover verticalSpacing={'xs'}>
           <TableHeader
             headers={array.initiate('Card Label', 'Created At', 'QR Link', '')}
