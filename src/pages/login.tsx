@@ -1,13 +1,13 @@
 import useLogin from "@/hooks/authentication/use-login";
 import {
-  Button,
-  Container,
+  Box,
+  Button, Container,
   PasswordInput,
-  Space,
-  TextInput,
+  Space, Text, TextInput
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useBooleanToggle } from "@mantine/hooks";
+import { Link } from "react-router-dom";
 
 interface FormValues {
   email: string;
@@ -37,9 +37,12 @@ const Login = () => {
         <TextInput mb={"md"} label={"Email"} {...getInputProps("email")} />
         <PasswordInput label={"Password"} {...getInputProps("password")} />
         <Space h={"lg"} />
-        <Button loading={loading} type={"submit"} fullWidth>
+        <Button mb={'md'} loading={loading} type={"submit"} fullWidth>
           Submit
         </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }} >
+        <Text color={'blue'} to={'/reset'} component={Link}>Forgot Password?</Text>
+        </Box>
       </form>
     </Container>
   );

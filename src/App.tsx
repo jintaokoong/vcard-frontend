@@ -1,14 +1,15 @@
+import { Can } from '@/contexts/casl-context';
+import Cards from '@/pages/cards';
+import CardsDetails from '@/pages/cards-details';
+import Main from '@/pages/main';
+import Users from '@/pages/users';
+import { createElement, FunctionComponent } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Root from './components/root';
 import Login from './pages/login';
+import ResetPassword from './pages/reset-password';
 import Providers from './providers';
 import Gatekeeper from './providers/gatekeeper';
-import Main from '@/pages/main';
-import Users from '@/pages/users';
-import Cards from '@/pages/cards';
-import { Can } from '@/contexts/casl-context';
-import { createElement, FunctionComponent } from 'react';
-import CardsDetails from '@/pages/cards-details';
 
 interface ProtectProps {
   s: string;
@@ -29,6 +30,7 @@ export default function App() {
         <Routes>
           <Route path={'/'} element={<Root />}>
             <Route path={'login'} element={<Login />} />
+            <Route path={'reset'} element={<ResetPassword />} />
             <Route
               path={'main'}
               element={
