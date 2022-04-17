@@ -1,3 +1,7 @@
+import countries from '@/constants/countries';
+import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
+import { Country } from '@/interfaces/shared/country';
+import { createOption, createOptions } from '@/utils/dropdown-utils';
 import {
   Accordion,
   Button,
@@ -8,12 +12,8 @@ import {
   TextInput,
   useAccordionState,
 } from '@mantine/core';
-import { Controller, UseFormReturn } from 'react-hook-form';
-import { createOption, createOptions } from '@/utils/dropdown-utils';
-import { Country } from '@/interfaces/shared/country';
 import { defaultTo, length, pipe, prop, when } from 'ramda';
-import countries from '@/constants/countries';
-import { CreateVcardRequest } from '@/interfaces/cards/create-vcard-req';
+import { Controller, UseFormReturn } from 'react-hook-form';
 
 interface Props {
   form: UseFormReturn<CreateVcardRequest>;
@@ -69,10 +69,7 @@ const CardForm = ({ form, onValid, loading }: Props) => {
         <Accordion.Item label={'Personal Address'}>
           <Grid>
             <Grid.Col>
-              <TextInput
-                label={'Address Label'}
-                {...register('address.label')}
-              />
+              <TextInput label={'Label'} {...register('address.label')} />
             </Grid.Col>
             <Grid.Col>
               <TextInput label={'Street'} {...register('address.street')} />
@@ -131,10 +128,7 @@ const CardForm = ({ form, onValid, loading }: Props) => {
         <Accordion.Item label={'Work Address'}>
           <Grid>
             <Grid.Col>
-              <TextInput
-                label={'Address Label'}
-                {...register('workAddress.label')}
-              />
+              <TextInput label={'Label'} {...register('workAddress.label')} />
             </Grid.Col>
             <Grid.Col>
               <TextInput label={'Street'} {...register('workAddress.street')} />
