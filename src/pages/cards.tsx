@@ -17,7 +17,7 @@ import {
   Pagination,
   Paper,
   Table,
-  Title
+  Title,
 } from '@mantine/core';
 import { composeWith, defaultTo, isNil } from 'ramda';
 import { Fragment } from 'react';
@@ -64,14 +64,16 @@ const Cards = () => {
             error={isError}
             data={data?.data ?? []}
             render={(card) => (
-              <tr>
+              <tr key={card._id}>
                 <td>{card.label}</td>
                 <td>
                   {defaultTo('N/A')(
                     composeNotNil([dateUtils.formatDefault])(card.createdAt),
                   )}
                 </td>
-                <td style={{ color: 'gray' }}>{import.meta.env.VITE_APP_QR_CODE_BASE_URL}/{card._id}</td>
+                <td style={{ color: 'gray' }}>
+                  {import.meta.env.VITE_APP_QR_CODE_BASE_URL}/{card._id}
+                </td>
                 <td>
                   <Menu>
                     <Menu.Item
