@@ -104,7 +104,7 @@ const CardForm = ({ form, onValid, loading }: Props) => {
                     clearable
                     label={'Country'}
                     data={createOptions<Country>(
-                      createOption<Country>(prop('name'))('code'),
+                      createOption<Country>(prop('name'))('name'),
                     )(countries)}
                     value={when<string, string | null>(
                       (value) => length(value) === 0,
@@ -157,7 +157,7 @@ const CardForm = ({ form, onValid, loading }: Props) => {
                     clearable
                     label={'Country'}
                     data={createOptions<Country>(
-                      createOption<Country>(prop('name'))('code'),
+                      createOption<Country>(prop('name'))('name'),
                     )(countries)}
                     value={when<string, string | null>(
                       (value) => length(value) === 0,
