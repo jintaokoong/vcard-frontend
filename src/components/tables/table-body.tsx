@@ -19,7 +19,8 @@ const Container = ({ children }: PropsWithChildren<any>) => {
 
 const TableBody = <T,>(props: Props<T>) => {
   const theme = useMantineTheme();
-  const textColor = theme.colorScheme === 'light' ? theme.colors.dark[2] : undefined;
+  const textColor =
+    theme.colorScheme === 'light' ? theme.colors.dark[2] : undefined;
   return (
     <Fragment>
       <tbody>
@@ -49,12 +50,21 @@ const TableBody = <T,>(props: Props<T>) => {
             <Group my={'sm'} direction={'column'} align={'center'}>
               <FaRegFrownOpen
                 size={72}
-                color={theme.colorScheme === 'light' ? theme.colors.dark[2] : undefined}
+                color={
+                  theme.colorScheme === 'light'
+                    ? theme.colors.dark[2]
+                    : undefined
+                }
               />
               <Text
                 align={'center'}
                 size={'md'}
-                color={theme.colorScheme === 'light' ? theme.colors.dark[2] : undefined}>
+                color={
+                  theme.colorScheme === 'light'
+                    ? theme.colors.dark[2]
+                    : undefined
+                }
+              >
                 No Data
               </Text>
             </Group>
