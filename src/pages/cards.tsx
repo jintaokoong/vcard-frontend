@@ -1,3 +1,15 @@
+import CreateCardModal from '@/components/modals/cards/create-card-modal';
+import DeleteCardModal from '@/components/modals/cards/delete-card-modal';
+import UpdateCardModal from '@/components/modals/cards/update-card-modal';
+import TableBody from '@/components/tables/table-body';
+import TableHeader from '@/components/tables/table-header';
+import useCardsListing from '@/hooks/cards/use-cards-listing';
+import usePagination from '@/hooks/listings/use-pagination';
+import useBooleanModal from '@/hooks/modals/use-boolean-modal';
+import useItemModal from '@/hooks/modals/use-item-modal';
+import { Vcard } from '@/interfaces/cards/vcard';
+import array from '@/utils/array-utils';
+import dateUtils from '@/utils/date-utils';
 import {
   Button,
   Group,
@@ -5,25 +17,13 @@ import {
   Pagination,
   Paper,
   Table,
-  Title,
+  Title
 } from '@mantine/core';
-import { Fragment } from 'react';
-import useBooleanModal from '@/hooks/modals/use-boolean-modal';
-import CreateCardModal from '@/components/modals/cards/create-card-modal';
-import TableBody from '@/components/tables/table-body';
-import TableHeader from '@/components/tables/table-header';
-import array from '@/utils/array-utils';
-import dateUtils from '@/utils/date-utils';
 import { composeWith, defaultTo, isNil } from 'ramda';
-import useCardsListing from '@/hooks/cards/use-cards-listing';
-import usePagination from '@/hooks/listings/use-pagination';
-import useItemModal from '@/hooks/modals/use-item-modal';
-import { Vcard } from '@/interfaces/cards/vcard';
-import DeleteCardModal from '@/components/modals/cards/delete-card-modal';
-import { FaBook, FaEdit } from 'react-icons/fa';
+import { Fragment } from 'react';
 import { FaTrash } from 'react-icons/all';
+import { FaBook, FaEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import UpdateCardModal from '@/components/modals/cards/update-card-modal';
 
 const composeNotNil = composeWith((fn, res) => (isNil(res) ? res : fn(res)));
 
@@ -71,7 +71,7 @@ const Cards = () => {
                     composeNotNil([dateUtils.formatDefault])(card.createdAt),
                   )}
                 </td>
-                <td>https://somedomain.netlify.app/{card._id}</td>
+                <td style={{ color: 'gray' }}>{import.meta.env.VITE_APP_QR_CODE_BASE_URL}/{card._id}</td>
                 <td>
                   <Menu>
                     <Menu.Item
